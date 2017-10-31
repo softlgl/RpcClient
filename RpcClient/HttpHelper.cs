@@ -4,6 +4,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RpcClient
@@ -18,9 +20,9 @@ namespace RpcClient
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static string Get(string url, Dictionary<string, string> headers, int timeout = 10000, bool isGzip = false)
+        public static string Get(string url, Dictionary<string, string> headers, string userAgent = null, int timeout = 10000, bool isGzip = false)
         {
-            return PostDataToServer(url, null, "GET", headers, timeout, isGzip);
+            return PostDataToServer(url, null, "GET", headers, userAgent,timeout, isGzip);
         }
 
         /// <summary>
@@ -31,7 +33,7 @@ namespace RpcClient
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static string Get(string url, Dictionary<string, string> data, Dictionary<string, string> headers, int timeout = 10000, bool isGzip = false)
+        public static string Get(string url, Dictionary<string, string> data, Dictionary<string, string> headers, string userAgent = null, int timeout = 10000, bool isGzip = false)
         {
             if (data != null && data.Count > 0)
             {
@@ -42,7 +44,7 @@ namespace RpcClient
                 }
                 url = builder.ToString().TrimEnd('&');
             }
-            return Get(url, headers, timeout, isGzip);
+            return Get(url, headers, userAgent,timeout, isGzip);
         }
 
         /// <summary>
@@ -53,9 +55,9 @@ namespace RpcClient
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static string Post(string url, string data,Dictionary<string, string> headers, int timeout = 10000, bool isGzip = false)
+        public static string Post(string url, string data,Dictionary<string, string> headers, string userAgent=null,int timeout = 10000, bool isGzip = false)
         {
-            return PostDataToServer(url, data, "POST", headers, timeout, isGzip);
+            return PostDataToServer(url, data, "POST", headers, userAgent, timeout, isGzip);
         }
 
         /// <summary>
@@ -65,16 +67,27 @@ namespace RpcClient
         /// <param name="data">请求的参数</param>
         /// <param name="method">请求方式(post/get)</param>
         /// <param name="headers">请求头</param>
+        /// <param name="userAgent">用户代理</param>
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip请求</param>
         /// <returns>请求内容</returns>
-        private static string PostDataToServer(string url, string data, string method, Dictionary<string, string> headers,int timeout , bool isGzip)
+        private static string PostDataToServer(string url, string data, string method, Dictionary<string, string> headers,string userAgent,int timeout , bool isGzip)
         {
             HttpWebRequest request = null;
             string result = "";
             try
             {
-                request = WebRequest.Create(url) as HttpWebRequest;
+                //如果是发送HTTPS请求  
+                if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                    request = WebRequest.Create(url) as HttpWebRequest;
+                    request.ProtocolVersion = HttpVersion.Version10;
+                }
+                else
+                {
+                    request = WebRequest.Create(url) as HttpWebRequest;
+                }
                 request.Timeout = timeout;
                 request.KeepAlive = true;
                 ServicePointManager.Expect100Continue = false;
@@ -146,6 +159,11 @@ namespace RpcClient
             {
 
             }
+        }
+
+        private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true; //总是接受  
         }
     }
 }

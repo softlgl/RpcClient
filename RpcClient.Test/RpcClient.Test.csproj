@@ -52,6 +52,7 @@
     <Compile Include="Model\Class.cs" />
     <Compile Include="Model\School.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RpcHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
