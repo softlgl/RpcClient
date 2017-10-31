@@ -16,24 +16,14 @@ namespace RpcClient
         /// get请求
         /// </summary>
         /// <param name="url">请求的地址</param>
+        /// <param name="data">请求参数</param>
         /// <param name="headers">请求头集合</param>
+        /// <param name="contentType">设置contentType</param>
+        /// <param name="userAgent">用户代理</param>
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static string Get(string url, Dictionary<string, string> headers, string userAgent = null, int timeout = 10000, bool isGzip = false)
-        {
-            return PostDataToServer(url, null, "GET", headers, null,userAgent,timeout, isGzip);
-        }
-
-        /// <summary>
-        /// get请求
-        /// </summary>
-        /// <param name="url">请求的地址</param>
-        /// <param name="headers">请求头集合</param>
-        /// <param name="timeout">超时时间</param>
-        /// <param name="isGzip">是否为gzip</param>
-        /// <returns></returns>
-        public static string Get(string url, Dictionary<string, string> data, Dictionary<string, string> headers, string userAgent = null, int timeout = 10000, bool isGzip = false)
+        public static string Get(string url, Dictionary<string, string> data=null, Dictionary<string, string> headers=null, string userAgent = null, int timeout = 10000, bool isGzip = false)
         {
             if (data != null && data.Count > 0)
             {
@@ -44,20 +34,21 @@ namespace RpcClient
                 }
                 url = builder.ToString().TrimEnd('&');
             }
-            return Get(url, headers, userAgent,timeout, isGzip);
+            return PostDataToServer(url, null, "GET", headers, null,userAgent,timeout, isGzip);
         }
 
         /// <summary>
         /// post请求
         /// </summary>
         /// <param name="url">请求的地址</param>
+        /// <param name="data">请求参数</param>
         /// <param name="headers">请求头集合</param>
         /// <param name="contentType">设置contentType</param>
         /// <param name="userAgent">用户代理</param>
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static string Post(string url, string data,Dictionary<string, string> headers, string contentType = "application/json;charset=utf-8"
+        public static string Post(string url, string data,Dictionary<string, string> headers=null, string contentType = "application/json;charset=utf-8"
             , string userAgent=null, int timeout = 10000, bool isGzip = false)
         {
             return PostDataToServer(url, data, "POST", headers, contentType,userAgent, timeout, isGzip);

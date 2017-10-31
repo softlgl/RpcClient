@@ -12,6 +12,8 @@ namespace RpcClient.Test
         [TestMethod]
         public void RpcGet()
         {
+            RpcGetTest();
+            Console.Read();
         }
 
         /// <summary>
@@ -20,6 +22,13 @@ namespace RpcClient.Test
         [TestMethod]
         public void RpcPost()
         {
+        }
+
+
+        public async void RpcGetTest()
+        {
+            string result=await RpcHelper.GetAsync("https://www.baidu.com");
+            Console.WriteLine(result);
         }
     }
 }
