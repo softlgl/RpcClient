@@ -22,7 +22,7 @@ namespace RpcClient
         /// <returns></returns>
         public static string Get(string url, Dictionary<string, string> headers, string userAgent = null, int timeout = 10000, bool isGzip = false)
         {
-            return PostDataToServer(url, null, "GET", headers, userAgent,timeout, isGzip);
+            return PostDataToServer(url, null, "GET", headers, null,userAgent,timeout, isGzip);
         }
 
         /// <summary>
@@ -52,12 +52,15 @@ namespace RpcClient
         /// </summary>
         /// <param name="url">请求的地址</param>
         /// <param name="headers">请求头集合</param>
+        /// <param name="contentType">设置contentType</param>
+        /// <param name="userAgent">用户代理</param>
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static string Post(string url, string data,Dictionary<string, string> headers, string userAgent=null,int timeout = 10000, bool isGzip = false)
+        public static string Post(string url, string data,Dictionary<string, string> headers, string contentType = "application/json;charset=utf-8"
+            , string userAgent=null, int timeout = 10000, bool isGzip = false)
         {
-            return PostDataToServer(url, data, "POST", headers, userAgent, timeout, isGzip);
+            return PostDataToServer(url, data, "POST", headers, contentType,userAgent, timeout, isGzip);
         }
 
         /// <summary>
@@ -67,11 +70,13 @@ namespace RpcClient
         /// <param name="data">请求的参数</param>
         /// <param name="method">请求方式(post/get)</param>
         /// <param name="headers">请求头</param>
+        /// <param name="contentType">设置contentType</param>
         /// <param name="userAgent">用户代理</param>
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip请求</param>
         /// <returns>请求内容</returns>
-        private static string PostDataToServer(string url, string data, string method, Dictionary<string, string> headers,string userAgent,int timeout , bool isGzip)
+        private static string PostDataToServer(string url, string data, string method, Dictionary<string, string> headers
+            , string contentType,string userAgent,int timeout , bool isGzip)
         {
             HttpWebRequest request = null;
             string result = "";
@@ -100,6 +105,12 @@ namespace RpcClient
                         request.Headers.Add(item.Key,item.Value);
                     }
                 }
+                
+                //设置useragent
+                if (!string.IsNullOrEmpty(userAgent))
+                {
+                    request.UserAgent = userAgent;
+                }
                 switch (method.ToUpper())
                 {
                     case "GET":
@@ -115,7 +126,7 @@ namespace RpcClient
                             }
 
                             byte[] bdata = Encoding.UTF8.GetBytes(data);
-                            request.ContentType = "application/json;charset=utf-8";
+                            request.ContentType = contentType;
                             request.ContentLength = bdata.Length;
 
                             Stream streamOut = request.GetRequestStream();
