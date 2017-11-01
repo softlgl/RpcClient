@@ -18,6 +18,10 @@ namespace RpcClient
         /// <returns></returns>
         public static string ToJson<T>(this T obj)where T:class,new()
         {
+            if (obj == null)
+            {
+                throw new ArgumentNullException(nameof(obj));
+            }
             using (MemoryStream stream = new MemoryStream())
             {
                 DataContractJsonSerializer jsonSerialize = new DataContractJsonSerializer(obj.GetType());
@@ -34,6 +38,10 @@ namespace RpcClient
         /// <returns></returns>
         public static T JsonToObject<T>(this string jsonStr) where T:class,new()
         {
+            if (string.IsNullOrEmpty(jsonStr))
+            {
+                throw new ArgumentNullException(nameof(jsonStr));
+            }
             using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonStr)))
             {
                 DataContractJsonSerializer jsonSerialize = new DataContractJsonSerializer(typeof(T));
