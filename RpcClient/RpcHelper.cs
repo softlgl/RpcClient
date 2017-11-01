@@ -33,7 +33,7 @@ namespace RpcClient
         }
 
         /// <summary>
-        /// http get请求
+        /// http 异步get请求
         /// </summary>
         /// <param name="url">请求的地址</param>
         /// <param name="data">请求参数</param>
@@ -139,7 +139,7 @@ namespace RpcClient
         }
 
         /// <summary>
-        /// http post请求
+        /// http 异步post请求
         /// </summary>
         /// <param name="url">请求的地址</param>
         /// <param name="data">请求参数</param>
@@ -172,6 +172,8 @@ namespace RpcClient
         /// <summary>
         /// http post请求
         /// </summary>
+        /// <typeparam name="T">请求参数类型</typeparam>
+        /// <typeparam name="TResult">返回参数类型</typeparam>
         /// <param name="url">请求的地址</param>
         /// <param name="data">请求参数</param>
         /// <param name="headers">请求头集合</param>
@@ -199,6 +201,8 @@ namespace RpcClient
         /// <summary>
         /// http post请求
         /// </summary>
+        /// <typeparam name="T">请求参数类型</typeparam>
+        /// <typeparam name="TResult">返回参数类型</typeparam>
         /// <param name="url">请求的地址</param>
         /// <param name="data">请求参数</param>
         /// <param name="headers">请求头集合</param>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RpcClient
 {
-    public static class JsonExt
+    internal static class JsonExt
     {
         /// <summary>
         /// 序列化

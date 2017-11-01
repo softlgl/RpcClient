@@ -10,7 +10,7 @@ using System.Text;
 
 namespace RpcClient
 {
-    public class HttpHelper
+    internal class HttpHelper
     {
         /// <summary>
         /// get请求
