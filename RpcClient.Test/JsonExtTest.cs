@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using RpcClient.Test.Model;
+using RpcClient.Test.Ext;
 
 namespace RpcClient.Test
 {
