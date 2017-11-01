@@ -82,7 +82,7 @@ namespace RpcClient
         }
 
         /// <summary>
-        /// http get请求
+        /// http 异步get请求
         /// </summary>
         /// <typeparam name="TResult">结果Model</typeparam>
         /// <param name="url">请求的地址</param>
