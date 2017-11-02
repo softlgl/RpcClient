@@ -52,8 +52,12 @@
   <ItemGroup>
     <Compile Include="Ext\JsonExt.cs" />
     <Compile Include="JsonExtTest.cs" />
+    <Compile Include="Model\ApiResponseBase.cs" />
+    <Compile Include="Model\ApiStatus.cs" />
     <Compile Include="Model\Class.cs" />
+    <Compile Include="Model\LoginDto.cs" />
     <Compile Include="Model\School.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RpcHelperTest.cs" />
   </ItemGroup>

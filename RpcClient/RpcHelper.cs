@@ -124,7 +124,8 @@ namespace RpcClient
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static string Post<T>(string url, T data, Dictionary<string, string> headers = null, string contentType=null,string userAgent = null, int timeout = 10000, bool isGzip = false)
+        public static string Post<T>(string url, T data, Dictionary<string, string> headers = null, string contentType = "application/json;charset=utf-8", 
+            string userAgent = null, int timeout = 10000, bool isGzip = false)
             where T:class,new()
         {
             if (string.IsNullOrEmpty(url))
@@ -149,7 +150,8 @@ namespace RpcClient
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static Task<string> PostAsync<T>(string url, T data, Dictionary<string, string> headers = null, string contentType = null, string userAgent = null, int timeout = 10000, bool isGzip = false)
+        public static Task<string> PostAsync<T>(string url, T data, Dictionary<string, string> headers = null, string contentType = "application/json;charset=utf-8"
+            , string userAgent = null, int timeout = 10000, bool isGzip = false)
             where T : class, new()
         {
             if (string.IsNullOrEmpty(url))
@@ -182,7 +184,8 @@ namespace RpcClient
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static TResult Post<T,TResult>(string url, T data, Dictionary<string, string> headers = null, string contentType = null, string userAgent = null, int timeout = 10000, bool isGzip = false)
+        public static TResult Post<T,TResult>(string url, T data, Dictionary<string, string> headers = null, string contentType = "application/json;charset=utf-8"
+            , string userAgent = null, int timeout = 10000, bool isGzip = false)
             where T : class, new()
             where TResult:class,new()
         {
@@ -211,7 +214,8 @@ namespace RpcClient
         /// <param name="timeout">超时时间</param>
         /// <param name="isGzip">是否为gzip</param>
         /// <returns></returns>
-        public static Task<TResult> PostAsync<T,TResult>(string url, T data, Dictionary<string, string> headers = null, string contentType = null, string userAgent = null, int timeout = 10000, bool isGzip = false)
+        public static Task<TResult> PostAsync<T,TResult>(string url, T data, Dictionary<string, string> headers = null, string contentType = "application/json;charset=utf-8"
+            , string userAgent = null, int timeout = 10000, bool isGzip = false)
             where T : class, new()
             where TResult : class, new()
         {

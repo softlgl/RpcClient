@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("RpcClient.Test")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("RpcClient.Test测试项目")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("RpcClient.Test")]
