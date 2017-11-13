@@ -14,7 +14,8 @@ namespace RpcClient.Test
         [TestMethod]
         public void RpcGet()
         {
-            RpcGetTest();
+            string result = RpcHelper.GetAsync("https://www.baidu.com").Result;
+            Assert.IsNotNull(result);
         }
 
         /// <summary>
@@ -23,7 +24,8 @@ namespace RpcClient.Test
         [TestMethod]
         public void RpcPost()
         {
-            RpcPostTest();
+            string result = RpcHelper.PostAsync("https://www.baidu.com", new LoginDto { LoginName = "hqmcq", LoginPwd = "123456" }).Result;
+            Assert.IsNotNull(result);
         }
 
 
